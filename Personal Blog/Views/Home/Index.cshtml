@@ -1,8 +1,14 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Welcome Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome To Kgomo Tales Blog</h1>
+
+    <form action="@Url.Action("Login", "Home")" method="post">
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+    </form>
+    <form action="@Url.Action("HomePage", "Home")" method="post">
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Go to Blog</button>
+    </form>
 </div>

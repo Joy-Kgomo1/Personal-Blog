@@ -1,0 +1,13 @@
+﻿@model Article;
+@{
+	ViewData["Title"] = "Deleted Item";
+}
+
+<div class="deleted-item-container">
+	<h1 class="deleted-item-title">Deleted Item</h1>
+	<div class="item-details">
+		<h2 class="item-title">@Model.heading</h2>
+		<p class="item-class">Article deleted!</p>
+		<a asp-action="Dashboard" asp-controller="Admin" class="btn btn-primary">Go to Dashboard</a>
+	</div>
+</div>

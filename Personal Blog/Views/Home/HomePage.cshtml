@@ -1,0 +1,21 @@
+﻿@model List<Personal_Blog.Models.ArticleViewModel>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h2>Personal Blog</h2>
+
+@foreach (var article in Model)
+{
+    <div class="card my-3">
+        <div class="card-body">
+            <h4 class="card-title">@article.heading</h4>
+            <h6 class="card-subtitle mb-2 text-muted">@article.date.ToString("yyyy-MM-dd")</h6>
+            <p class="card-text">
+                @article.content.Substring(0, Math.Min(150, article.content.Length))...
+            </p>
+            <a asp-action="Read" asp-route-heading="@article.heading" class="btn btn-primary">Read</a>
+        </div>
+    </div>
+}

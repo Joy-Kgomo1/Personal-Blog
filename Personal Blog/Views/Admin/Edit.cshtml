@@ -1,0 +1,23 @@
+﻿@model Article;
+@{
+	ViewData["Title"] = $"Edit {Model.heading} {Model.date}";
+}
+
+<div class="edit-article-container">
+	<h1>Update Article</h1>
+	<form asp-action="EditArticle" asp-controller="Admin" method="post" class="Edit-Article-form">
+		<input type="hidden" asp-for="ID" />
+
+		<label class="form-label">Heading</label>
+		<input class="form-control" asp-for="heading" type="text" />
+
+		<label class="form-label mt-3">Date</label>
+		<input class="form-control" asp-for="date" type="date" />
+
+		<label class="form-label mt-3">Content</label>
+		<textarea class="form-control" asp-for="content" rows="10"></textarea>
+
+		<button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+
+	</form>
+</div>

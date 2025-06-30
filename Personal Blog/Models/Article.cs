@@ -7,7 +7,7 @@ namespace Personal_Blog.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-
+        public int ID { get; set; }
         [Required]
         public string heading { get; set; }
 

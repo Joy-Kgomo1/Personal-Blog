@@ -4,6 +4,7 @@ namespace Personal_Blog.Models
 {
     public class ArticleViewModel
     {
+        public int ID { get; set; }
 
         public string heading { get; set; }
 

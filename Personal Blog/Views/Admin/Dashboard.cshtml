@@ -1,0 +1,41 @@
+﻿@model List<ArticleViewModel>
+@{
+	ViewBag.Title = "Admin Dashboard";
+}
+
+<div class="container m-5">
+	<h1>Admin Dashboard</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">Heading</th>
+				<th scope="col">Edit</th>
+				<th scope="col">Delete</th>
+			</tr>
+		</thead>
+		<tbody>
+			@if (Model != null)
+			{
+				foreach (var item in Model)
+				{
+					<tr>
+						<td>@item.heading</td>
+						<td>
+							<form asp-controller="Admin" asp-action="Edit" method="get">
+								<input type="hidden" name="Id" value="@item.ID" />
+								<button type="submit" class="btn btn-warning">Edit</button>
+								</form>
+						</td>
+						<td>
+							<form asp-controller="Admin" asp-action="Delete" method="get">
+								<input type="hidden" name="Id" value="@item.ID" />
+								<button type="submit" class="btn btn-danger">Delete</button>
+							</form>
+						</td>
+					</tr>
+				}
+			}
+		</tbody>
+	</table>
+</div>
