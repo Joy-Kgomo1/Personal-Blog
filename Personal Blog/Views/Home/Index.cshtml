@@ -5,10 +5,11 @@
 <div class="text-center">
     <h1 class="display-4">Welcome To Kgomo Tales Blog</h1>
 
-    <form action="@Url.Action("Login", "Home")" method="post">
-        <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+    <form asp-action="Login" asp-controller="Home" method="get">
+        <button type="submit" class="btn btn-primary">Login</button>
     </form>
-    <form action="@Url.Action("HomePage", "Home")" method="post">
-        <button type="submit" class="btn btn-primary btn-lg btn-block">Go to Blog</button>
+
+    <form asp-action="HomePage" asp-controller="Home" method="get">
+        <button type="submit" class="btn btn-primary">Go to Blog</button>
     </form>
 </div>

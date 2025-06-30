@@ -1,0 +1,19 @@
+﻿@model ArticleViewModel
+
+@{
+    ViewData["Title"] = Model.heading;
+}
+
+<div class="container mt-5">
+    <h1 class="mb-2">@Model.heading</h1>
+    <p class="text-muted mb-4">@Model.date.ToString("yyyy-MM-dd")</p>
+
+    <div style="white-space: pre-line; font-size: 1.1rem;">
+        @Model.content
+    </div>
+
+    <div class="mt-4">
+        <a asp-action="HomePage" asp-controller="Home" class="btn btn-secondary">← Back to Blog</a>
+    </div>
+</div>
+
