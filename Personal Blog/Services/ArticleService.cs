@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Personal_Blog.Models;
 using Personal_Blog.Models.Seeders;
 using System.Collections.Generic;
+using System.Linq;
 
 
 namespace Personal_Blog.Services
@@ -31,63 +32,40 @@ namespace Personal_Blog.Services
 
         }
 
-        public static List<ArticleViewModel> GetArticles()
+        public List<ArticleViewModel> GetArticles()
         {
-            List<ArticleViewModel> articles = new();
+            return articlecontext.Articles
+                 .Select(article => new ArticleViewModel
+                 {
+                     ID = article.ID,
+                     heading = article.heading,
+                     date = article.date,
+                     content = article.content
+                 })
+                 .ToList();
 
-            using var connection = new SqliteConnection(connectionString);
-            connection.Open();
-
-            string query = "SELECT ID, heading, date, content FROM Article";
-
-            using var cmd = new SqliteCommand(query, connection);
-            using var reader = cmd.ExecuteReader();
-
-            while (reader.Read())
-            {
-                ArticleViewModel article = new()
-                {
-                    ID = reader.GetInt32(0),
-                    heading = reader.GetString(1),
-                    date = reader.GetDateTime(2),
-                    content = reader.GetString(3)
-                };
-
-                articles.Add(article);
-            }
-            return articles;
         }
 
-        public static bool DeleteArticleByID(int id)
+        public bool DeleteArticleByID(int id)
         {
-            using var con = new SqliteConnection(connectionString);
-            con.Open();
+            var article = articlecontext.Articles.Find(id);
+            if (article == null) return false;
 
-            string qry = "DELETE FROM Articles WHERE Id = @ID";
+            articlecontext.Articles.Remove(article);
+            return articlecontext.SaveChanges() > 0;
 
-            using var cmd = new SqliteCommand(qry, con);
-            cmd.Parameters.AddWithValue("@ID", id);
-
-            int affectedRows = cmd.ExecuteNonQuery();
-            return affectedRows > 0;
-           
         }
 
-        public static bool EditArticleByID(int id, string heading, DateTime date, string content)
+        public bool EditArticleByID(int id, string heading, DateTime date, string content)
         {
-            using var con = new SqliteConnection(connectionString);
-            con.Open();
+            var article = articlecontext.Articles.FirstOrDefault(a => a.ID == id);
+            if (article == null) return false;
 
-            string qry = @"UPDATE Articles SET heading = @heading, date = @date, content =@content where ID =@ID ";
+            article.heading = heading;
+            article.date = date;
+            article.content = content;
 
-            using var cmd = new SqliteCommand(qry, con);
-            cmd.Parameters.AddWithValue("@heading", heading);
-            cmd.Parameters.AddWithValue("@date", date);
-            cmd.Parameters.AddWithValue("@content", content);
-            cmd.Parameters.AddWithValue("@ID", id);
-
-            int affectedRows = cmd.ExecuteNonQuery();
-            return affectedRows > 0;
+            return articlecontext.SaveChanges() > 0;
 
         }
     }

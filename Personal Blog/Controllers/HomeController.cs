@@ -1,16 +1,22 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Personal_Blog.Models;
+using Personal_Blog.Services;
 
 namespace Personal_Blog.Controllers;
 
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly ArticleContext _context;
+    private readonly ArticleService _service;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, ArticleContext context, ArticleService service)
     {
         _logger = logger;
+        _context = context;
+        _service = service;
     }
 
     public IActionResult Index()
@@ -22,6 +28,46 @@ public class HomeController : Controller
     {
         return View();
     }
+
+    public IActionResult HomePage()
+    {
+        var articles = _service.GetArticles();
+        return View(articles);
+    }
+
+    public IActionResult Login(LoginViewModel model)
+    {
+        if (ModelState.IsValid)
+        {
+            var user = _context.Users
+                .FirstOrDefault(u => u.username == model.username && u.password == model.password);
+
+            if (user != null)
+            {
+                // TODO: Add session/cookie logic if needed
+                return RedirectToAction("Dashboard", "Admin");
+            }
+
+            ViewBag.Message = "Invalid username or password.";
+        }
+
+        return View(model);
+    }
+
+    public IActionResult Read(int id)
+    {
+        var article = _service.GetArticles().FirstOrDefault(art => art.ID == id);
+
+        if(article==null)
+        {
+            return NotFound();
+        }
+
+        return View(article);
+
+    }
+
+    
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
