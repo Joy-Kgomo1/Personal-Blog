@@ -1,7 +1,6 @@
 📝 Personal Blog — ASP.NET Core MVC Project
 📌 Overview
 This is a simple personal blog web application built using ASP.NET Core MVC and Entity Framework Core with SQLite as the database. Users can read articles, and an admin can log in to manage (add, edit, delete) blog posts via a dashboard.
-https://roadmap.sh/projects/personal-blog
 
 ⚙️ Technologies Used
 ASP.NET Core MVC
@@ -32,4 +31,6 @@ Edit existing blog articles
 Delete articles
 
 View admin dashboard
+
+https://roadmap.sh/projects/personal-blog
 
