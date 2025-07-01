@@ -8,10 +8,13 @@ namespace Personal_Blog.Services
     {
         public ArticleContext(DbContextOptions options) : base(options)
         {
-          // Database.EnsureCreated;
+          
         }
 
+        //Articles table in the database
         public DbSet<Article> Articles { get; set; }
+
+        //Users table in the database
         public DbSet<Users> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -23,8 +26,11 @@ namespace Personal_Blog.Services
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            // Set primary key for Users entity 
             modelBuilder.Entity<Users>().HasKey(x => x.ID);
-            modelBuilder.ApplyConfiguration(new UserConfirguration());
+            // Apply seeder classes
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new ArticleConfiguration());
         }
     }
 }

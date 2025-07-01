@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Personal_Blog.Models.Seeders
 {
-    public class UserConfirguration : IEntityTypeConfiguration<Users>
+    public class UserConfiguration : IEntityTypeConfiguration<Users>
     {
         public void Configure(EntityTypeBuilder<Users> builder)
         {

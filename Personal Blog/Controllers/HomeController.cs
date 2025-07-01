@@ -19,6 +19,7 @@ public class HomeController : Controller
         _service = service;
     }
 
+    //default landing page
     public IActionResult Index()
     {
         return View();
@@ -29,23 +30,27 @@ public class HomeController : Controller
         return View();
     }
 
+    //Homepage that displays all the articles
     public IActionResult HomePage()
     {
         var articles = _service.GetArticles();
         return View(articles);
     }
 
+    //login form page
     [HttpGet]
     public IActionResult Login()
     {
         return View();
     }
 
+    //Handle login form submission
     [HttpPost]
     public IActionResult Login(LoginViewModel model)
     {
         if (ModelState.IsValid)
         {
+            //checks if the data matches
             var user = _context.Users
                 .FirstOrDefault(u => u.username == model.username && u.password == model.password);
 
@@ -55,26 +60,26 @@ public class HomeController : Controller
                 return RedirectToAction("Dashboard", "Admin");
             }
 
+            // Show error if login fails
             ViewBag.Message = "Invalid username or password.";
         }
 
         return View(model);
     }
 
+    //Read a single article by ID
     public IActionResult Read(int id)
     {
         var article = _service.GetArticles().FirstOrDefault(art => art.ID == id);
 
         if(article==null)
         {
-            return NotFound();
+            return NotFound(); // Show 404 if article not found
         }
 
         return View(article);
 
     }
-
-    
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

@@ -14,9 +14,10 @@ namespace Personal_Blog.Services
 
         public ArticleService(ArticleContext articleContext)
         {
-            this.articlecontext = articlecontext;
-            //this.articlecontext.Database.EnsureCreated();
+            this.articlecontext = articleContext;
         }
+
+        // Adds a new article to the database and returns the new article ID
         public int AddNewArticle(Article article)
         {
             try
@@ -40,15 +41,18 @@ namespace Personal_Blog.Services
 
         }
 
+        // Retrieves all articles from the database and maps them to view models
         public List<ArticleViewModel> GetArticles()
         {
-            try {
+            try
+            {
                 if (articlecontext == null)
                 {
-                    Console.WriteLine("Database context is full");
+                    Console.WriteLine("Database context is null.");
                     return new List<ArticleViewModel>();
                 }
-                return articlecontext.Articles
+
+                var articles = articlecontext.Articles
                      .Select(article => new ArticleViewModel
                      {
                          ID = article.ID,
@@ -57,6 +61,9 @@ namespace Personal_Blog.Services
                          content = article.content
                      })
                      .ToList();
+
+                Console.WriteLine($"GetArticles retrieved {articles.Count} articles.");
+                return articles;
             }
             catch (Exception ex)
             {
@@ -65,6 +72,7 @@ namespace Personal_Blog.Services
             }
         }
 
+        // Deletes an article by ID and returns true if successful
         public bool DeleteArticleByID(int id)
         {
             try {
@@ -88,6 +96,7 @@ namespace Personal_Blog.Services
             }
         }
 
+        // Edits an existing article by ID and returns true if the update succeeds
         public bool EditArticleByID(int id, string heading, DateTime date, string content)
         {
             try {
@@ -103,6 +112,8 @@ namespace Personal_Blog.Services
                 article.heading = heading;
                 article.date = date;
                 article.content = content;
+
+                articlecontext.Entry(article).State = EntityState.Modified;
 
                 return articlecontext.SaveChanges() > 0;
 

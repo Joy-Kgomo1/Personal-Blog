@@ -2,14 +2,19 @@
     ViewData["Title"] = "Welcome Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome To Kgomo Tales Blog</h1>
+<div class="container mt-5">
+    <div class="text-center">
+        <h1 class="display-4 mb-4">✨ Welcome to <span class="text-primary">Kgomo Tales Blog</span> ✨</h1>
+        <p class="lead mb-5">Discover stories, tech insights, and creative ideas!</p>
 
-    <form asp-action="Login" asp-controller="Home" method="get">
-        <button type="submit" class="btn btn-primary">Login</button>
-    </form>
+        <div class="d-flex justify-content-center gap-3">
+            <form asp-action="Login" asp-controller="Home" method="get">
+                <button type="submit" class="btn btn-outline-primary btn-lg px-4">Login</button>
+            </form>
 
-    <form asp-action="HomePage" asp-controller="Home" method="get">
-        <button type="submit" class="btn btn-primary">Go to Blog</button>
-    </form>
+            <form asp-action="HomePage" asp-controller="Home" method="get">
+                <button type="submit" class="btn btn-primary btn-lg px-4">Go to Blog</button>
+            </form>
+        </div>
+    </div>
 </div>
