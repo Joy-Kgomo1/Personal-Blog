@@ -11,62 +11,108 @@ namespace Personal_Blog.Services
     public class ArticleService
     {
         ArticleContext articlecontext;
-        private const string connectionString = "Data Source=blogData.db";
+
         public ArticleService(ArticleContext articleContext)
         {
             this.articlecontext = articlecontext;
-            this.articlecontext.Database.EnsureCreated();
+            //this.articlecontext.Database.EnsureCreated();
         }
         public int AddNewArticle(Article article)
         {
-            if (articlecontext == null)
+            try
             {
-                Console.WriteLine("Database context is full");
+                if (articlecontext == null)
+                {
+                    Console.WriteLine("Database context is full");
+                    return 0;
+                }
+
+                articlecontext.Articles.Add(article);
+                articlecontext.SaveChanges();
+
+                return article.ID;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error adding article: {ex.Message}");
                 return 0;
             }
-
-            articlecontext.Articles.Add(article);
-            articlecontext.SaveChanges();
-
-            return article.ID;
 
         }
 
         public List<ArticleViewModel> GetArticles()
         {
-            return articlecontext.Articles
-                 .Select(article => new ArticleViewModel
-                 {
-                     ID = article.ID,
-                     heading = article.heading,
-                     date = article.date,
-                     content = article.content
-                 })
-                 .ToList();
-
+            try {
+                if (articlecontext == null)
+                {
+                    Console.WriteLine("Database context is full");
+                    return new List<ArticleViewModel>();
+                }
+                return articlecontext.Articles
+                     .Select(article => new ArticleViewModel
+                     {
+                         ID = article.ID,
+                         heading = article.heading,
+                         date = article.date,
+                         content = article.content
+                     })
+                     .ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error retrieving articles: {ex.Message}");
+                return new List<ArticleViewModel>();
+            }
         }
 
         public bool DeleteArticleByID(int id)
         {
-            var article = articlecontext.Articles.Find(id);
-            if (article == null) return false;
+            try {
+                if (articlecontext == null)
+                {
+                    Console.WriteLine("Database context is full");
+                    return false;
 
-            articlecontext.Articles.Remove(article);
-            return articlecontext.SaveChanges() > 0;
+                }
+                var article = articlecontext.Articles.Find(id);
+                if (article == null) return false;
 
+                articlecontext.Articles.Remove(article);
+                return articlecontext.SaveChanges() > 0;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error deleting articles: {ex.Message}");
+                return false;
+            }
         }
 
         public bool EditArticleByID(int id, string heading, DateTime date, string content)
         {
-            var article = articlecontext.Articles.FirstOrDefault(a => a.ID == id);
-            if (article == null) return false;
+            try {
+                if (articlecontext == null)
+                {
+                    Console.WriteLine("Database context is full");
+                    return false;
 
-            article.heading = heading;
-            article.date = date;
-            article.content = content;
+                }
+                var article = articlecontext.Articles.FirstOrDefault(a => a.ID == id);
+                if (article == null) return false;
 
-            return articlecontext.SaveChanges() > 0;
+                article.heading = heading;
+                article.date = date;
+                article.content = content;
 
-        }
+                return articlecontext.SaveChanges() > 0;
+
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Error editing articles: {ex.Message}");
+                return false;
+
+            }
+        }   
     }
 }

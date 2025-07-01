@@ -35,6 +35,13 @@ public class HomeController : Controller
         return View(articles);
     }
 
+    [HttpGet]
+    public IActionResult Login()
+    {
+        return View();
+    }
+
+    [HttpPost]
     public IActionResult Login(LoginViewModel model)
     {
         if (ModelState.IsValid)

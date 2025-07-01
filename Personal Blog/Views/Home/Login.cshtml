@@ -4,7 +4,7 @@
     ViewData["Title"] = "Login";
 }
 
-<form method="post" asp-controller="Home" asp-action="Dashboard" class="form-signin">
+<form method="post" asp-controller="Admin" asp-action="Dashboard" class="form-signin">
     @if (!string.IsNullOrEmpty(ViewBag.Message))
     {
         <div class="alert alert-danger">

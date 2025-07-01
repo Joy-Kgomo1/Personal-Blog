@@ -3,6 +3,11 @@
 	ViewBag.Title = "Admin Dashboard";
 }
 
+@if (Model.Count == 0)
+{
+	<p>No articles available.</p>
+}
+
 <div class="container m-5">
 	<div class="d-flex justify-content-between align-items-center mb-3">
 		<h1>Admin Dashboard</h1>

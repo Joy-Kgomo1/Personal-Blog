@@ -18,11 +18,13 @@ namespace Personal_Blog.Controllers
             return View(articles);
         }
 
+        [HttpGet]
         public IActionResult Add()
         {
             return View();
         }
 
+        [HttpPost]
         public IActionResult Add(Article article)
         {
             if (ModelState.IsValid)
@@ -33,6 +35,7 @@ namespace Personal_Blog.Controllers
             return View(article);
         }
 
+        [HttpGet]
         public IActionResult Edit(int id)
         {
             var article = _service.GetArticles().FirstOrDefault(art => art.ID == id);
@@ -51,6 +54,7 @@ namespace Personal_Blog.Controllers
             return View(model);
         }
 
+        [HttpPost]
         public IActionResult Edit(Article updatedArticle)
         {
             if (ModelState.IsValid)
@@ -71,6 +75,7 @@ namespace Personal_Blog.Controllers
             return View(updatedArticle);
         }
 
+        [HttpGet]
         public IActionResult Delete(int id)
         {
             bool deleted = _service.DeleteArticleByID(id);
